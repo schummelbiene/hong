@@ -10,10 +10,15 @@ void boundary_init(boundary_t* b) {
 };
 
 void boundary_deinit(boundary_t* b) {
-    if(b->length == 0) return;
-    while() {
-        
-    }
+    if(b->length <= 0) return;
+    vertex_t* ver_iter = b->head;
+    do {
+        vertex_t* ver_help = ver_iter;
+        ver_iter = ver_iter->next;
+        free(ver_help);
+    } while(b->head != ver_iter);
+    b->head = NULL;
+    b->length = 0;
 };
 
 
@@ -83,7 +88,7 @@ void boundary_delete(boundary_t* b, int pos) {
 void boundary_print(boundary_t* b) {
 	vertex_t* ver_help = b->head;
 	
-	for(int i = 0; i< b->length; i++) {
+	for(int i = 0; i < b->length; i++) {
 		printf("%i ", ver_help->v);
 		ver_help = ver_help->next;
 	}

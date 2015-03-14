@@ -15,6 +15,7 @@ typedef struct {
 } boundary_t;
 
 void boundary_init(boundary_t* b);
+void boundary_deinit(boundary_t* b);
 void boundary_insert(boundary_t* b, int val_new, int pos);
 void boundary_delete(boundary_t* b, int pos);
 void boundary_print(boundary_t* b);
