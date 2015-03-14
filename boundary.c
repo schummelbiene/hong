@@ -9,6 +9,7 @@ void boundary_init(boundary_t* b) {
 	b->length = 0;
 };
 
+// Clears the whole boundary list.
 void boundary_deinit(boundary_t* b) {
     if(b->length <= 0) return;
     vertex_t* ver_iter = b->head;
