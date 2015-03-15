@@ -24,8 +24,7 @@ void boundary_deinit(boundary_t* b) {
 
 
 // Inserts a new vertex with valence val_new into the boundary at the position between the elements at pos and pos+1.
-// TODO: boundary_insert adds an element after pos, it would be nice if actually adds it before.
-// TODO: if the boundary is empty, inserting an element should close the cycle.
+
 void boundary_insert(boundary_t* b, int val_new, int pos) {
 
 	//	b->head =def= (*l).head;
@@ -48,7 +47,7 @@ void boundary_insert(boundary_t* b, int val_new, int pos) {
 
 	vertex_t* ver_iter = b->head;
 	
-	for (int i = 0; i < pos; i++) {
+	for (int i = 1; i < pos; i++) {
 		ver_iter = ver_iter->next;
 	}
 	
@@ -62,31 +61,51 @@ void boundary_insert(boundary_t* b, int val_new, int pos) {
 };
 
 // Deletes the element at position pos of the boundary b. 
-//TODO: if pos==0, retarget the b->head pointer.
-//TODO: if b->length == 0; define a behavior
+
 //TODO(MAYBE): if b->length == 1; set b->head == NULL
+
 void boundary_delete(boundary_t* b, int pos) {
+
+	if (b->length == 0) {
+		printf("Nothing to delete. \n");
+		return;
+	}
 	
 	if(pos == 0) {
 		pos = b->length;
-	};
-
-	vertex_t* ver_iter = b->head;
 	
-	for(int i = 0; i < pos-1; i++) {
+		vertex_t* ver_iter = b->head;
+		
+		for(int i = 0; i < b->length-1; i++) {
+			ver_iter = ver_iter->next;
+		};
+		
+		vertex_t* ver_help = ver_iter->next;
+		ver_iter->next = ver_iter->next->next;
+		b->head = ver_iter-> next;
+
+		free(ver_help);
+	}
+
+	else {
+		vertex_t* ver_iter = b->head;
+		
+		for(int i = 0; i < pos-1; i++) {
 		ver_iter = ver_iter->next;
+		}
+		
+		vertex_t* ver_help = ver_iter->next;
+		ver_iter->next = ver_iter->next->next;
+
+		free(ver_help);
 	}
 	
-
-	vertex_t* ver_help = ver_iter->next;
-	
-	ver_iter->next = ver_iter->next->next;
-	free(ver_help);
-
 	b->length--;
+
 }
 
 void boundary_print(boundary_t* b) {
+
 	vertex_t* ver_help = b->head;
 	
 	for(int i = 0; i < b->length; i++) {
