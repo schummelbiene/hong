@@ -5,5 +5,6 @@ project (hong)
 set(CMAKE_C_FLAGS "-std=c11")
 
 add_executable(hong
-	main.c
+    boundary.c
+    main.c
 )
