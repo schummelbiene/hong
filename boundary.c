@@ -71,35 +71,23 @@ void boundary_delete(boundary_t* b, int pos) {
 		return;
 	}
 	
+	// Philosphy: First set the second element as new head element, then delete the last element (at position 'length'). This is the old head.  
 	if(pos == 0) {
-		pos = b->length;
-	
-		vertex_t* ver_iter = b->head;
-		
-		for(int i = 0; i < b->length-1; i++) {
-			ver_iter = ver_iter->next;
-		};
-		
-		vertex_t* ver_help = ver_iter->next;
-		ver_iter->next = ver_iter->next->next;
-		b->head = ver_iter-> next;
-
-		free(ver_help);
+		pos = b->length-1;
+		b->head = b->head->next;
 	}
-
-	else {
-		vertex_t* ver_iter = b->head;
-		
-		for(int i = 0; i < pos-1; i++) {
+	
+	vertex_t* ver_iter = b->head;
+	
+	for(int i = 0; i < pos-1; i++) {
 		ver_iter = ver_iter->next;
-		}
-		
-		vertex_t* ver_help = ver_iter->next;
-		ver_iter->next = ver_iter->next->next;
-
-		free(ver_help);
 	}
 	
+	vertex_t* ver_help = ver_iter->next;
+	ver_iter->next = ver_iter->next->next;
+	
+	free(ver_help);
+ 
 	b->length--;
 
 }
