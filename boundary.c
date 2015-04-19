@@ -87,13 +87,11 @@ void boundary_delete(boundary_t* b, int pos) {
 		b->length = 0;
 		return;
 	}
-	
+    pos %= b->length;
 	// Philosophy: First set the second element as new head element, then delete the last element (at position 'length'). This is the old head.
-	boundary_print(b);
-	if(pos == 0) {
+    if(pos == 0) {
 		pos = b->length-1;
-		b->head = b->head->next;
-		printf("%08x ", b->head);		
+		b->head = b->head->next;	
 	}
 	
 	vertex_t* ver_iter = b->head;
@@ -102,11 +100,8 @@ void boundary_delete(boundary_t* b, int pos) {
 		ver_iter = ver_iter->next;
 	}
 	vertex_t* ver_help = ver_iter->next;
-	printf("(%08x, ", ver_iter->next);	
 	ver_iter->next = ver_iter->next->next;
-	printf("%08x)\n", ver_iter->next);	
 	free(ver_help);
-	boundary_print(b);
  	
 	b->length--;
 
@@ -116,13 +111,12 @@ void boundary_print(boundary_t* b) {
 
 	vertex_t* ver_help = b->head;
 	if (b->length > 0){
-		printf("%2i %08x ", b->length, b->head);
+		printf("%2i: ", b->length);
 	}
 	
 	for(int i = 0; i < b->length; i++) {
 		printf("%i ", ver_help->v);
 		ver_help = ver_help->next;
-		printf("%08x ", ver_help);
 	}
 	printf("\n");
 }
